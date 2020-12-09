@@ -28,7 +28,6 @@ export class AppComponent implements OnInit {
   }
 
   returnOrders() {
-    console.log('TRY AGAINthis.orders');
     console.log(this.orders);
   }
 }

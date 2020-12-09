@@ -1,5 +1,9 @@
 <h2>Welcome to the Order Manager</h2>
 
-<h3>{{title}}</h3>
+<h3>{{ title }}</h3>
+
+<ul>
+  <li *ngFor="let order of orders">{{ order.orderName }}</li>
+</ul>
 
 <button (click)="returnOrders()">Hey</button>
