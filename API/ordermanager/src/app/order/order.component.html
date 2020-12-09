@@ -1,0 +1,8 @@
+<h3>{{ title }}</h3>
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let order of orders">
+    <button (click)="OnClickOrderDetail(order.id)">Details</button>
+    {{ order.orderName }}
+  </li>
+</ul>
