@@ -1,8 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { OrderProductService } from 'src/services/order-product.service';
+import { OrdersService } from 'src/services/orders.service';
+import { ProductsService } from 'src/services/products.service';
 import { Order } from '../_models/order';
 import { OrderProduct } from '../_models/orderProduct';
+import { Product } from '../_models/product';
 
 @Component({
   selector: 'app-order-product',
@@ -11,14 +15,17 @@ import { OrderProduct } from '../_models/orderProduct';
 })
 export class OrderProductComponent implements OnInit {
   @Input() orderProductDetailSelected: any;
-  orderProduct: OrderProduct | any;
+  orderProducts: OrderProduct[];
   orderId: number;
-  order: any | string = 'loading';
-  products;
+  order: Order;
+  products: Product[];
 
   constructor(
     private activatedroute: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private productService: ProductsService,
+    private orderService: OrdersService,
+    private orderProductService: OrderProductService
   ) {
     this.activatedroute.params.subscribe((data) => {
       this.orderId = Number(data.id);
@@ -26,52 +33,56 @@ export class OrderProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getOrder();
-    this.getOrderProducts();
-    this.getProducts();
+    this.loadServices();
   }
 
-  getOrder() {
-    this.http
-      .get('https://localhost:5001/api/orders/' + this.orderId)
-      .subscribe(
-        (response) => {
-          this.order = response;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+  loadServices() {
+    this.productService.getProducts().subscribe((products) => {
+      this.products = products;
+    });
+    this.orderService.getOrder(this.orderId).subscribe((order) => {
+      this.order = order;
+    });
+    this.orderProductService
+      .getOrderProducts(this.orderId)
+      .subscribe((orderProducts) => {
+        this.orderProducts = orderProducts;
+      });
   }
 
-  getOrderProducts() {
-    this.http
-      .get('https://localhost:5001/api/OrderProduct/' + this.orderId)
-      .subscribe(
-        (response) => {
-          this.orderProduct = response;
-          console.log(this.orderProduct);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+  // getOrderProducts() {
+  //   this.http
+  //     .get<OrderProduct[]>(
+  //       'https://localhost:5001/api/OrderProduct/' + this.orderId
+  //     )
+  //     .subscribe(
+  //       (response) => {
+  //         this.orderProducts = response;
+  //       },
+  //       (error) => {
+  //         console.log(error);
+  //       }
+  //     );
 
-    this.orderProduct;
-  }
+  //   this.orderProducts;
+  // }
 
-  getProducts() {
-    this.http.get('https://localhost:5001/api/products').subscribe(
-      (response) => {
-        this.products = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
+  // getProducts() {
+  //   this.http.get<Product[]>('https://localhost:5001/api/products').subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //       this.products = response;
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 
   getProductName(_productId: number) {
-    return this.products.find((x) => x.productId == _productId).productName;
+    if (this.products) {
+      return this.products.find((x) => x.productId == _productId).productName;
+    }
+    return 'loading';
   }
 }

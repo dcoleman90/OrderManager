@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OrdersService } from 'src/services/orders.service';
 import { Order } from '../_models/order';
 
 @Component({
@@ -9,27 +10,25 @@ import { Order } from '../_models/order';
   styleUrls: ['./order.component.css'],
 })
 export class OrderComponent implements OnInit {
-  orders: any;// Order[];
+  orders: Order[];
   title = 'Orders';
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private orderService: OrdersService
+  ) {}
 
   ngOnInit() {
-    this.getOrders();
+    this.loadService();
   }
 
-  getOrders() {
-    this.http.get('https://localhost:5001/api/orders').subscribe(
-      (response) => {
-        this.orders = response;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  loadService() {
+    this.orderService.getOrders().subscribe((orders) => {
+      this.orders = orders;
+    });
   }
 
   OnClickOrderDetail(orderId) {
-    console.log(orderId);
     this.router.navigate(['/orders', orderId]);
   }
 }
