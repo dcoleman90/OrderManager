@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Order } from '../_models/order';
 
 @Component({
@@ -10,7 +11,7 @@ import { Order } from '../_models/order';
 export class OrderComponent implements OnInit {
   orders: any;// Order[];
   title = 'Orders';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
     this.getOrders();
@@ -29,5 +30,6 @@ export class OrderComponent implements OnInit {
 
   OnClickOrderDetail(orderId) {
     console.log(orderId);
+    this.router.navigate(['/orders', orderId]);
   }
 }

@@ -5,7 +5,7 @@ namespace API.Entities
 {
     public class OrderProduct
     {
-        public string OrderId { get; set; }
+        public int OrderId { get; set; }
 
         public int ProductId { get; set; }
 
