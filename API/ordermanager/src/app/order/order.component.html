@@ -2,7 +2,7 @@
 
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let order of orders">
-    <button (click)="OnClickOrderDetail(order.id)">Details</button>
+    <button (click)="OnClickOrderDetail(order.orderId)">Details</button>
     {{ order.orderName }}
   </li>
 </ul>

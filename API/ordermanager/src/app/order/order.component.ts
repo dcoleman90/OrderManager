@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Order } from '../_models/order';
 
 @Component({
   selector: 'app-order',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./order.component.css'],
 })
 export class OrderComponent implements OnInit {
-  orders: any;
+  orders: any;// Order[];
   title = 'Orders';
   constructor(private http: HttpClient) {}
 
@@ -27,6 +28,6 @@ export class OrderComponent implements OnInit {
   }
 
   OnClickOrderDetail(orderId) {
-    console.log(orderId); 
+    console.log(orderId);
   }
 }
