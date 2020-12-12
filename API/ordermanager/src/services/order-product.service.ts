@@ -26,10 +26,39 @@ export class OrderProductService {
         headers: headers,
       })
       .subscribe(
-        (result) => {
-          alert('Product Added');
-        },
+        (result) => {},
         (error) => console.error(error)
       );
+  }
+
+  UpdateQuantity(orderProduct: OrderProduct) {
+    if (orderProduct.quantity <= 0) {
+      return this.DeleteOrderProduct(orderProduct);
+    }
+    const body = JSON.stringify(orderProduct);
+    const headers = { 'Content-Type': 'application/json' };
+
+    return this.http
+      .put(this.baseUrl + 'OrderProduct/', body, {
+        headers: headers,
+      })
+      .subscribe(
+        (result) => {},
+        (error) => console.error(error)
+      );
+  }
+
+  DeleteOrderProduct(orderProduct: OrderProduct) {
+    const body = JSON.stringify(orderProduct);
+    const headers = { 'Content-Type': 'application/json' };
+
+    const options = {
+      headers: headers,
+      body: body,
+    };
+    return this.http.delete(this.baseUrl + 'OrderProduct/', options).subscribe(
+      (result) => {},
+      (error) => console.error(error)
+    );
   }
 }

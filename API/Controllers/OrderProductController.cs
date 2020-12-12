@@ -25,7 +25,7 @@ namespace API.Controllers
             return await _context.OrderProduct.ToListAsync();
         }
 
-        //Rename me
+ 
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<OrderProduct>>> GetOrderProductByOrderId(int id)
         {
@@ -40,6 +40,27 @@ namespace API.Controllers
             _context.SaveChanges();
 
             return orderProduct;
+        }
+
+        [HttpPut]
+        public void UpdateUser([FromBody] OrderProduct orderProduct)
+        {
+            OrderProduct orignalOrderProduct = _context.OrderProduct.Where(x => x.OrderId == orderProduct.OrderId && x.ProductId == orderProduct.ProductId).First();
+            orignalOrderProduct.Quantity = orderProduct.Quantity;
+
+            _context.OrderProduct.Update(orignalOrderProduct);
+            _context.SaveChanges();
+        }
+
+
+        [HttpDelete()]
+        public async Task<ActionResult> DeleteOrderProduct([FromBody] OrderProduct orderProduct) 
+        {
+            OrderProduct orignalOrderProduct = _context.OrderProduct.Where(x => x.OrderId == orderProduct.OrderId && x.ProductId == orderProduct.ProductId).First();
+            _context.OrderProduct.Remove(orignalOrderProduct);
+            _context.SaveChanges();
+
+            return Ok();
         }
     }
 }

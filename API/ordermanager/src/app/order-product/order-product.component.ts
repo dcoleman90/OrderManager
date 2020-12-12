@@ -61,5 +61,18 @@ export class OrderProductComponent implements OnInit {
   AddOrderProduct(orderId: number, productId: number) {
     this.tempOrderProduct = new OrderProduct(orderId, productId, 1);
     this.orderProductService.AddOrderProduct(this.tempOrderProduct);
+
+    this.loadServices();
+  }
+
+  UpdateQuantity(orderProduct: OrderProduct, updateAmount: number) {
+    orderProduct.quantity += updateAmount;
+
+    if (orderProduct.quantity <= 0) {
+      this.orderProductService.DeleteOrderProduct(orderProduct);
+    } else {
+      this.orderProductService.UpdateQuantity(orderProduct);
+    }
+    this.loadServices();
   }
 }

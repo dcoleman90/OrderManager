@@ -2,29 +2,57 @@
   Order Name:
   {{ order?.orderName }}
 </h5>
-<div>
+<div class="container">
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let orderProduct of orderProducts">
-      {{ getProductName(orderProduct.productId) }}, Quantity
-      {{ orderProduct.quantity }}
+      <div class="row">
+        <div class="col-auto">
+          <button
+            type="button"
+            class="btn btn-dark mr-1"
+            (click)="UpdateQuantity(orderProduct, 1)"
+          >
+            Increase Quantity
+          </button>
+        </div>
+
+        <div class="col-auto">
+          <button
+            type="button"
+            class="btn mr-1 btn-dark"
+            (click)="UpdateQuantity(orderProduct, -1)"
+          >
+            Decrease Quantity
+          </button>
+        </div>
+        <div class="col">
+          {{ getProductName(orderProduct.productId) }}, Quantity
+          {{ orderProduct.quantity }}
+        </div>
+      </div>
     </li>
   </ul>
 </div>
 <div style="margin-top: 20px">
   <h4>Manage Products</h4>
 </div>
-<div>
+<div class="container">
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let product of products">
-      <button
-        type="button"
-        class="btn btn-dark"
-        (click)="AddOrderProduct(order.orderId, product?.productId)"
-      >
-        Add</button
-      >&nbsp;
-      <button class="btn btn-dark">Remove</button>
-      {{ product.productName }}
+      <div class="row">
+        <div class="col-auto">
+          <button
+            type="button"
+            class="btn btn-dark"
+            (click)="AddOrderProduct(order.orderId, product?.productId)"
+          >
+            Add
+          </button>
+        </div>
+        &nbsp;
+        <!-- <button class="btn btn-dark">Remove</button> -->
+        <div class="col-auto">{{ product.productName }}</div>
+      </div>
     </li>
   </ul>
 </div>
