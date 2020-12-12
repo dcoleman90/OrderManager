@@ -1,7 +1,11 @@
-export interface OrderProduct {
+export class OrderProduct {
   orderId: number;
-  orderName: string;
   productId: number;
-  productName: string;
-  quantity: string;
+  quantity: number;
+
+  constructor(_orderId: number, _productId: number, _quantity: number) {
+    this.orderId = _orderId;
+    this.productId = _productId;
+    this.quantity = _quantity;
+  }
 }

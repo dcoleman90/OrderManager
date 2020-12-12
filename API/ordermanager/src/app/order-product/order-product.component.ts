@@ -19,6 +19,7 @@ export class OrderProductComponent implements OnInit {
   orderId: number;
   order: Order;
   products: Product[];
+  tempOrderProduct: OrderProduct;
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -50,39 +51,15 @@ export class OrderProductComponent implements OnInit {
       });
   }
 
-  // getOrderProducts() {
-  //   this.http
-  //     .get<OrderProduct[]>(
-  //       'https://localhost:5001/api/OrderProduct/' + this.orderId
-  //     )
-  //     .subscribe(
-  //       (response) => {
-  //         this.orderProducts = response;
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       }
-  //     );
-
-  //   this.orderProducts;
-  // }
-
-  // getProducts() {
-  //   this.http.get<Product[]>('https://localhost:5001/api/products').subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       this.products = response;
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
-
   getProductName(_productId: number) {
     if (this.products) {
       return this.products.find((x) => x.productId == _productId).productName;
     }
     return 'loading';
+  }
+
+  AddOrderProduct(orderId: number, productId: number) {
+    this.tempOrderProduct = new OrderProduct(orderId, productId, 1);
+    this.orderProductService.AddOrderProduct(this.tempOrderProduct);
   }
 }

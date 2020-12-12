@@ -28,7 +28,7 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  OnClickOrderDetail(orderId) {
+  OnClickOrderDetail(orderId: number) {
     this.router.navigate(['/orders', orderId]);
   }
 }

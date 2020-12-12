@@ -16,4 +16,20 @@ export class OrderProductService {
       this.baseUrl + 'OrderProduct/' + orderId
     );
   }
+
+  AddOrderProduct(orderProduct: OrderProduct) {
+    const body = JSON.stringify(orderProduct);
+    const headers = { 'Content-Type': 'application/json' };
+
+    return this.http
+      .post(this.baseUrl + 'OrderProduct/', body, {
+        headers: headers,
+      })
+      .subscribe(
+        (result) => {
+          alert('Product Added');
+        },
+        (error) => console.error(error)
+      );
+  }
 }
