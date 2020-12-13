@@ -1,7 +1,7 @@
-<h5>
+<h4>
   Order Name:
   {{ order?.orderName }}
-</h5>
+</h4>
 <div class="container">
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let orderProduct of orderProducts">
@@ -26,8 +26,10 @@
           </button>
         </div>
         <div class="col">
-          {{ getProductName(orderProduct.productId) }}, Quantity
-          {{ orderProduct.quantity }}
+          <h5>
+            {{ getProductName(orderProduct.productId) }}, Quantity
+            {{ orderProduct.quantity }}
+          </h5>
         </div>
       </div>
     </li>
@@ -50,8 +52,9 @@
           </button>
         </div>
         &nbsp;
-        <!-- <button class="btn btn-dark">Remove</button> -->
-        <div class="col-auto">{{ product.productName }}</div>
+        <div class="col-auto">
+          <h5>{{ product.productName }}</h5>
+        </div>
       </div>
     </li>
   </ul>
