@@ -75,4 +75,14 @@ export class OrderProductComponent implements OnInit {
     }
     this.loadServices();
   }
+
+  ShowProduct(_productId: number) {
+    if (this.orderProducts) {
+      if (this.orderProducts.some((o) => o.productId === _productId)) {
+        return false;
+      }
+      return true;
+    }
+    return false;
+  }
 }

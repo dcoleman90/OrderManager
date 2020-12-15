@@ -40,22 +40,29 @@
 </div>
 <div class="container">
   <ul class="list-group">
-    <li class="list-group-item" *ngFor="let product of products">
-      <div class="row">
-        <div class="col-auto">
-          <button
-            type="button"
-            class="btn btn-dark"
-            (click)="AddOrderProduct(order.orderId, product?.productId)"
-          >
-            Add
-          </button>
-        </div>
-        &nbsp;
-        <div class="col-auto">
-          <h5>{{ product.productName }}</h5>
-        </div>
+    <div *ngFor="let product of products">
+      <div>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-auto">
+              <div *ngIf="ShowProduct(product.productId); else AlreadyIncluded">
+                <button
+                  type="button"
+                  class="btn btn-dark"
+                  (click)="AddOrderProduct(order.orderId, product?.productId)"
+                >
+                  Add
+                </button>
+              </div>
+              <ng-template #AlreadyIncluded>Included</ng-template>
+            </div>
+            &nbsp;
+            <div class="col-auto">
+              <h5>{{ product.productName }}</h5>
+            </div>
+          </div>
+        </li>
       </div>
-    </li>
+    </div>
   </ul>
 </div>
